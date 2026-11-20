@@ -12,16 +12,21 @@ public class SearchStudent {
 		String username = "jdbcuser";
 		String password = "JDBC_Practice_2026!";
 		
-		String sql = "SELECT * FROM students WHERE id = ? ";
+		String sql = "SELECT * FROM students WHERE marks > ? AND course = ?";
 		
 		try(Scanner scan = new Scanner(System.in);
 				Connection con = DriverManager.getConnection(url, username, password);
 				PreparedStatement ps = con.prepareStatement(sql);)
 		{
-			System.out.println("Enter student ID : ");
-			int id = scan.nextInt();
+			System.out.println("Enter student marks : ");
+			int marks = scan.nextInt();
+			scan.nextLine();
 			
-			ps.setInt(1, id);
+			System.out.println("Enter student course : ");
+			String course = scan.nextLine();
+			
+			ps.setInt(1, marks);
+			ps.setString(2, course);
 			
 			try (ResultSet rs = ps.executeQuery()){
 				if(rs.next()) {
